@@ -27,69 +27,64 @@ ORDER BY routes.id ASC
 //AND (routes.distance / " . $mph . " + " . $chargingtime . " ) > " . ($filterDuration-1) . "
 //AND (routes.distance / " . $mph . " + " . $chargingtime . " ) < " . ($filterDuration+1) . "
 
+$i = 0;
+$lastId = -1;
 $result = $pMysqli->query($query);
 while ($row = mysqli_fetch_assoc($result)) {
+  if ($row['id'] != $lastId && $lastId != -1){
+    $i++;
+  }
+  $route_coord[$i][0] = $row['id'];
+  $route_coord[$i][1] .= '['.$row['longitude'].','.$row["latitude"].'],';
 
-  $routeCoord[0][0] = $row['id'];
-  $routeCoord[0][1] .= '['.$row['longitude'].','.$row["latitude"].'],';
-
-  ?>
-
-  routes id: <?= $row["id"] ?> <br>
-  title: <?= $row["title"] ?> <br>
-  date: <?= formatDate($row["date"]) ?> <br>
-  distance: <?= formatDistance($row["distance"]) ?> <br>
-  altitude: <?= formatAltitude($row["altitude"]) ?> <br>
-  duration: <?= formatDuration(getDuration($row["distance"], $mph, $chargingtime)) ?> <br>
-  user_id: <?= $row["user_id"] ?> <br>
-  username: <?= $row["username"] ?> <br>
-  type: <?= $row["type"] ?> <br>
-  route_type_id: <?= $row["route_type_id"] ?> <br>
-  latitude: <?= $row["latitude"] ?><br>
-  longitude: <?= $row["longitude"] ?><br>
-  power: <?= $row["power"] ?><br>
-  <br>
-
-  <script>
-  var route = [
-    [9.788725, 48.800585],
-    [9.888721, 48.700585]
-  ];
-  </script>
-
-  <?php
+  $lastId = $row['id'];
 }
-// rtrim($routeCoord[0][1],',');
-// echo(rtrim($routeCoord[0][1],','));
-// $route = rtrim($routeCoord[0][1],',');
 ?>
 
 
-<script>
-map.on('load', function () {
-  map.addLayer({
-    "id": "route_id",
-    //"id": "route",
-    "type": "line",
-    "source": {
-      "type": "geojson",
-      "data": {
-        "type": "Feature",
-        "properties": {},
-        "geometry": {
-          "type": "LineString",
-          "coordinates": route
+<!-- routes id: <?= $row["id"] ?> <br>
+title: <?= $row["title"] ?> <br>
+date: <?= formatDate($row["date"]) ?> <br>
+distance: <?= formatDistance($row["distance"]) ?> <br>
+altitude: <?= formatAltitude($row["altitude"]) ?> <br>
+duration: <?= formatDuration(getDuration($row["distance"], $mph, $chargingtime)) ?> <br>
+user_id: <?= $row["user_id"] ?> <br>
+username: <?= $row["username"] ?> <br>
+type: <?= $row["type"] ?> <br>
+route_type_id: <?= $row["route_type_id"] ?> <br>
+latitude: <?= $row["latitude"] ?><br>
+longitude: <?= $row["longitude"] ?><br>
+power: <?= $row["power"] ?><br>
+<br> -->
+
+
+<?php foreach ($route_coord as $route): ?>
+  <script>
+  map.on('load', function () {
+    map.addLayer({
+      "id": "route_<?= $route[0] ?>",
+      "type": "line",
+      "source": {
+        "type": "geojson",
+        "data": {
+          "type": "Feature",
+          "properties": {},
+          "geometry": {
+            "type": "LineString",
+            "coordinates": [<?= rtrim($route[1],',') ?>]
+          }
         }
+      },
+      "layout": {
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      "paint": {
+        "line-color": "#888",
+        "line-width": 4
       }
-    },
-    "layout": {
-      "line-join": "round",
-      "line-cap": "round"
-    },
-    "paint": {
-      "line-color": "#888",
-      "line-width": 20
-    }
+    });
   });
-});
-</script>';
+</script>
+
+<?php endforeach; ?>
