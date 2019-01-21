@@ -24,7 +24,8 @@ while ($row = mysqli_fetch_assoc($result)) {
   //show selected route on map
   ?>
 
-  latest routes id: <?= $row["id"] ?> <br>
+  
+  <!-- latest routes id: <?= $row["id"] ?> <br>
   title: <?= $row["title"] ?> <br>
   date: <?= formatDate($row["date"]) ?> <br>
   distance: <?= formatDistance($row["distance"]) ?> <br>
@@ -37,8 +38,7 @@ while ($row = mysqli_fetch_assoc($result)) {
   latitude: <?= $row["latitude"] ?><br>
   longitude: <?= $row["longitude"] ?><br>
   power: <?= $row["power"] ?><br>
-  <br>
+  <br> -->
 
-  <?php
-}
-?>
+
+<?php } ?>

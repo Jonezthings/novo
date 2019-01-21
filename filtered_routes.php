@@ -29,6 +29,7 @@ ORDER BY routes.id ASC
 
 $i = 0;
 $lastId = -1;
+
 $result = $pMysqli->query($query);
 while ($row = mysqli_fetch_assoc($result)) {
   if ($row['id'] != $lastId && $lastId != -1){
