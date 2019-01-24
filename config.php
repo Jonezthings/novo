@@ -18,3 +18,4 @@ $pMysqli->query("SET NAMES 'utf8'");
 $sitename = "Routenplaner";
 
 ?>
+ 

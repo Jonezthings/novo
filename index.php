@@ -36,9 +36,7 @@ include("update.php");
 
 
 <body>
-  <div class="container-fluid">
-    <?php include("map.php") ?>
-  </div>
+  <?php include("map.php") ?>
 
   <!-- jQuery (notwendig für Bootstrap’s JavaScript Plugins) -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.js"></script>

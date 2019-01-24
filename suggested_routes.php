@@ -1,8 +1,8 @@
-<p>
+<!-- <p>
   <b>
     suggested_routes
   </b>
-</p>
+</p> -->
 
 
 <?php
@@ -10,21 +10,28 @@ $query = "
 SELECT suggested_routes.*,
 routes.title, routes.date, routes.distance, routes.altitude, routes.route_type_id,
 users.username,
-route_type.type,
-coordinates.latitude, coordinates.longitude, coordinates.power
+route_type.type
 FROM suggested_routes suggested_routes
 LEFT JOIN routes ON suggested_routes.route_id = routes.id
 LEFT JOIN users ON suggested_routes.user_id = users.id
 LEFT JOIN route_type ON routes.route_type_id = route_type.id
-LEFT JOIN coordinates ON routes.id = coordinates.route_id
 WHERE suggested_routes.user_id = '" . getUser() . "'
 ORDER BY suggested_routes.id DESC
 ";
 
 $result = $pMysqli->query($query);
 while ($row = mysqli_fetch_assoc($result)) {
-  //show selected route on map
   ?>
+  <div class="col-3">
+    <div class="card mb-">
+      <img src="https://via.placeholder.com/150x100" class="card-img-top" alt="Routeimage">
+      <div class="card-body">
+        <p class="card-text"><?= formatDistance($row["distance"]) ?></p>
+        <p class="card-text"><?= formatAltitude($row["altitude"]) ?></p>
+        <p class="card-text"><?= formatDuration(getDuration($row["distance"], $mph, $chargingtime)) ?></p>
+      </div>
+    </div>
+  </div>
 
 
   <!-- suggested_routes id: <?= $row["id"] ?> <br>
@@ -39,9 +46,6 @@ while ($row = mysqli_fetch_assoc($result)) {
   username: <?= $row["username"] ?> <br>
   type: <?= $row["type"] ?> <br>
   route_type_id: <?= $row["route_type_id"] ?> <br>
-  latitude: <?= $row["latitude"] ?><br>
-  longitude: <?= $row["longitude"] ?><br>
-  power: <?= $row["power"] ?><br>
   <br> -->
 
 

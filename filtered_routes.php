@@ -39,24 +39,26 @@ while ($row = mysqli_fetch_assoc($result)) {
   $route_coord[$i][1] .= '['.$row['longitude'].','.$row["latitude"].'],';
 
   $lastId = $row['id'];
-}
-?>
+  ?>
 
 
-<!-- routes id: <?= $row["id"] ?> <br>
-title: <?= $row["title"] ?> <br>
-date: <?= formatDate($row["date"]) ?> <br>
-distance: <?= formatDistance($row["distance"]) ?> <br>
-altitude: <?= formatAltitude($row["altitude"]) ?> <br>
-duration: <?= formatDuration(getDuration($row["distance"], $mph, $chargingtime)) ?> <br>
-user_id: <?= $row["user_id"] ?> <br>
-username: <?= $row["username"] ?> <br>
-type: <?= $row["type"] ?> <br>
-route_type_id: <?= $row["route_type_id"] ?> <br>
-latitude: <?= $row["latitude"] ?><br>
-longitude: <?= $row["longitude"] ?><br>
-power: <?= $row["power"] ?><br>
-<br> -->
+  <!-- routes id: <?= $row["id"] ?> <br>
+  title: <?= $row["title"] ?> <br>
+  date: <?= formatDate($row["date"]) ?> <br>
+  distance: <?= formatDistance($row["distance"]) ?> <br>
+  altitude: <?= formatAltitude($row["altitude"]) ?> <br>
+  duration: <?= formatDuration(getDuration($row["distance"], $mph, $chargingtime)) ?> <br>
+  user_id: <?= $row["user_id"] ?> <br>
+  username: <?= $row["username"] ?> <br>
+  type: <?= $row["type"] ?> <br>
+  route_type_id: <?= $row["route_type_id"] ?> <br>
+  latitude: <?= $row["latitude"] ?><br>
+  longitude: <?= $row["longitude"] ?><br>
+  power: <?= $row["power"] ?><br>
+  <br> -->
+
+
+<?php } ?>
 
 
 <?php foreach ($route_coord as $route): ?>

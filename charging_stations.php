@@ -41,7 +41,7 @@ while ($row = mysqli_fetch_assoc($result)) {
       "type": "circle",
       "source": "<?= $row['id'] ?>",
       "paint": {
-        "circle-color": "#a3a",
+        "circle-color": "#33FFCE",
         "circle-radius": 15,
       }
     });
